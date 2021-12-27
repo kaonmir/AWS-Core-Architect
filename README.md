@@ -6,7 +6,7 @@ EC2에서 `npm start`를 하면 서버가 Express 서버가 실행된다. 그러
 
 > 직접해보면 된다.
 
-### VPC & EC2 구성
+### 1.1. VPC & EC2 구성
 
 새로 VPC를 만들고 Public 서브넷 (A)과 Private Subnet (B)를 만든다.
 
@@ -16,7 +16,7 @@ EC2에서 `npm start`를 하면 서버가 Express 서버가 실행된다. 그러
 
 A-Host는 Security Group에서 Inbound에 3000 포트도 추가로 연다.
 
-### Express 구성
+### 1.2. Express 구성
 
 간단하게 `/health`로 HTTP GET 요청을 하면 `{status: "ok"}`을 반환하게 하는 API를 만들어보자
 
@@ -32,12 +32,15 @@ nohup npm start &
 # A-Host에서 /health 확인하기
 curl http://localhost:3000/health
 ```
-### 결과 확인하기
+
+![Simple Express Server Diagra ](Assets/1.%20simple%20express%20server%20diagram.png)
+### 1.3. 결과 확인하기
 확인 방법은 다음과 같다.
 
-1. `A-Host`에서 Localhost로 확인을 해 본 다음 잘 되면 ssh를 끊었다가 다시 해본다.
-2. `A-Sub`에서 `A-Host`의 Private IP로 확인한다. 
-3. `B-Sub`에서 `A-Host`의 Private IP로 확인한다.
-4. 로컬 컴퓨터에서 `A-Host`의 Public IP로 확인한다.
+1. `A-Host`에서 Localhost로 확인한다.
+2. `A-Host`에서 ssh를 끊었다가 다시 연결한 다음, Localhost로 확인한다.
+3. `A-Sub`에서 `A-Host`의 Private IP로 확인한다. 
+4. `B-Sub`에서 `A-Host`의 Private IP로 확인한다.
+5. 로컬 컴퓨터에서 `A-Host`의 Public IP로 확인한다.
 
 
