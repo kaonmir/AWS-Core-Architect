@@ -33,14 +33,16 @@ nohup npm start &
 curl http://localhost:3000/health
 ```
 
-![Simple Express Server Diagra ](Assets/1.%20simple%20express%20server%20diagram.png)
+![Simple Express Server Diagram](Assets/1.%20simple%20express%20server%20diagram.png)
 ### 1.3. 결과 확인하기
-확인 방법은 다음과 같다.
 
 - [X] `A-Host`에서 Localhost로 확인한다.
-- [ ] `A-Host`에서 ssh를 끊었다가 다시 연결한 다음, Localhost로 확인한다.
+- [X] `A-Host`에서 ssh를 끊었다가 다시 연결한 다음, Localhost로 확인한다.
 - [X] `A-Sub`에서 `A-Host`의 Private IP로 확인한다. 
 - [X] `B-Sub`에서 `A-Host`의 Private IP로 확인한다.
 - [X] 로컬 컴퓨터에서 `A-Host`의 Public IP로 확인한다.
 
+### 1.4. 결론
+
+따로 NGINX를 쓰지 않고 `npm start`만 해도 포트는 외부에 노출된다.
 
