@@ -6,8 +6,8 @@ phases:
   install:
     commands:
       - echo Entered the install phase...
-      - apt-get update -y
-      - apt-get install -y git
+      - sudo yum update -y
+      - sudo yum install -y git
       - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
       - . ~/.nvm/nvm.sh
       - nvm install node
