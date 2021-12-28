@@ -43,6 +43,8 @@ A-Host는 Security Group에서 Inbound에 3000 포트도 추가로 연다.
 
 이번 작업은 ASG나 시작 템플릿 같은 자동화 도구를 쓰지 않고 진행할 거다. 모두 수동으로 각각의 인스턴스를 만들고 Bastion Host를 통해 ssh로 접근한다. 각 EC2에 이전에 만들었던 Express 서버를 설치하고 잘 동작하는지 다시 한 번 검사한다. 인터넷이 안된다면 NAT Gateway가 동작하지 않는 것이니 확인하자.
 
+EC2가 모두 Private 서브넷에 있기 때문에 NAT 게이트웨이를 만들고 라우트 테이블을 변경해서 단방향 통신이 가능하게 한다.
+
 ### 2.2. EC2를 Target Group에 넣고 ALB 붙이기
 
 이 작업은 모두 콘솔에서 진행한다. 3000번 포트로 대상 그룹과 ALB를 만든다. 그리고 ALB에서 자체 제공해 주는 도메인 네임으로 접근을 해본다.
@@ -53,6 +55,7 @@ A-Host는 Security Group에서 Inbound에 3000 포트도 추가로 연다.
 
 ![Why doesn't it work](Assets/2.1.%20elb%20went%20worng.gif)
 
+아예 안되는 건 아니고 2분 정도 있다가 결과가 출력된다. 무엇이 문제인지는 도통 알 수 없지만 잘 된다는 것을 확인할 수 있다.
 
 ## 3. CI/CD Pipeline 구축
 
@@ -62,12 +65,13 @@ A-Host는 Security Group에서 Inbound에 3000 포트도 추가로 연다.
 
 ![CI/CD Code Pipeline](Assets/3.%20cicd%20pipeline.png)
 
-### 3.1. VPC 구성 요소 추가
-
-위 사진에서 코드 파이프라인 부분을 제외하고 구축한다. Target Group의 EC2 2개는 직접 콘솔로 만들어 넣어 둘 거고, 코드는 이전에 만들었던 /health API가 있는 Express를 활용할 것이다.
-
-EC2가 모두 Private 서브넷에 있기 때문에 NAT 게이트웨이를 만들고 라우트 테이블을 변경해서 단방향 통신이 가능하게 한다.
-
-### 3.2. CI/CD 파이프라인 구축
+### 3.1. CI/CD 파이프라인 구축
 
 깃허브에 커밋이 되면 자동으로 새 EC2를 만들어서 Target Group에 추가하도록 구성해보자. 커밋을 10번 하면 10개의 EC2가 추가되는 건데 말이 안되긴 한다. 그래도 일단 그렇게 하고 나중에 ASG를 통해서 관리하자.
+
+일단 기존에 만들었던 VPC를 그대로 가져다가 쓰기로 하자. CodeCommit은 쓰지 않고 Github를 사용하기로 한다.
+
+### CodeDeploy 만들기
+
+- [X] CodeCommit 대신 Github를 리포지토리로 사용한다.
+- [X] buildspec.yml을 만들어 빌드를 진행한다.
